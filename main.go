@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"compress/gzip"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -46,16 +47,19 @@ func main() {
 }
 
 func Serve(opt *WebappServerOpt) error {
-	gzipHandler, err := gziphandler.GzipHandlerWithOpts(gziphandler.ContentTypes([]string{
-		"application/json",
-		"application/javascript",
-		"image/svg+xml",
-		"text/html",
-		"text/xml",
-		"text/plain",
-		"text/css",
-		"text/*",
-	}))
+	gzipHandler, err := gziphandler.GzipHandlerWithOpts(
+		gziphandler.CompressionLevel(gzip.BestSpeed),
+		gziphandler.ContentTypes([]string{
+			"application/json",
+			"application/javascript",
+			"image/svg+xml",
+			"text/html",
+			"text/xml",
+			"text/plain",
+			"text/css",
+			"text/*",
+		}),
+	)
 	if err != nil {
 		return err
 	}
