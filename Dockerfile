@@ -9,15 +9,16 @@ RUN go build -o webappserve
 
 FROM alpine
 
-COPY --from=builder /go/src/github.com/querycap/webappserve/webappserve /go/src/github.com/querycap/webappserve/webappserve
+COPY --from=builder /go/src/github.com/querycap/webappserve/webappserve /bin/webappserve
+COPY ./mime.types /etc/apache2/mime.types
 
-WORKDIR /go/src/github.com/querycap/webappserve
+WORKDIR /app
 COPY ./index.html /app/index.html
 
-ENV APP_ROOT=/app
+ENV APP_ROOT=.
 ENV APP_ENV=staging
 ENV APP_CONFIG=""
 
 EXPOSE 80
 
-CMD ["./webappserve"]
+CMD ["webappserve"]
