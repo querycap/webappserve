@@ -145,6 +145,11 @@ func (s *webappServer) responseFromIndexHTML(w http.ResponseWriter) {
 }
 
 func (s *webappServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		w.WriteHeader(http.StatusNoContent)
+		return
+	}
+
 	p := r.URL.Path
 
 	if p == "/favicon.ico" {
