@@ -5,7 +5,7 @@ WORKDIR /go/src/github.com/querycap/webappserve
 
 ENV GOPROXY="https://goproxy.cn,direct"
 
-RUN go build -o webappserve
+RUN CGO_ENABLED=0 go build -o webappserve
 
 FROM alpine
 

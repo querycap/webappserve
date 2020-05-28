@@ -1,3 +1,4 @@
+start: build
+	docker run -p=80:80 querycap/webappserve:latest
 build:
-	GOOS=linux go build -o webappserve
-	docker build -t querycap/webappserve:latest .
+	docker buildx build --platform linux/amd64,linux/arm64 --push -t querycap/webappserve:latest .

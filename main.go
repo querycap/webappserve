@@ -14,6 +14,7 @@ import (
 	"os"
 	"os/signal"
 	"path"
+	"runtime"
 	"strings"
 	"syscall"
 	"time"
@@ -74,7 +75,7 @@ func Serve(opt *WebappServerOpt) error {
 	signal.Notify(stopCh, os.Interrupt, syscall.SIGTERM)
 
 	go func() {
-		log.Printf("webapp serve on %s\n", srv.Addr)
+		log.Printf("webapp serve on %s (%s/%s)\n", srv.Addr, runtime.GOOS, runtime.GOARCH)
 
 		if err := srv.ListenAndServe(); err != nil {
 			if err == http.ErrServerClosed {
