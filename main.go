@@ -38,7 +38,7 @@ func init() {
 	cmd.Flags().StringVarP(&serverOpt.Port, "port", "p", os.Getenv("PORT"), "port")
 	cmd.Flags().StringVarP(&serverOpt.AppRoot, "root", "", os.Getenv("APP_ROOT"), "app root")
 	cmd.Flags().StringVarP(&serverOpt.AppConfig, "config", "c", os.Getenv("APP_CONFIG"), "app config")
-	cmd.Flags().StringVarP(&serverOpt.AppEnv, "env", "e", os.Getenv("APP_ENV"), "app env")
+	cmd.Flags().StringVarP(&serverOpt.AppEnv, "env", "e", os.Getenv("ENV"), "app env")
 }
 
 func main() {

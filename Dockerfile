@@ -22,8 +22,8 @@ WORKDIR /app
 COPY ./index.html /app/index.html
 
 ENV APP_ROOT=.
-ENV APP_ENV=staging
 ENV APP_CONFIG=""
+ENV ENV=staging
 
 EXPOSE 80
 
