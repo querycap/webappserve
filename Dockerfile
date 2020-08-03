@@ -7,7 +7,7 @@ WORKDIR /go/src/github.com/querycap/webappserve
 
 ENV GOPROXY="https://goproxy.cn,direct"
 
-RUN CGO_ENABLED=0 go build -o webappserve
+RUN make build
 
 FROM debian:buster-slim
 

@@ -14,4 +14,4 @@ jobs:
           buildx-version: latest
           qemu-version: latest
       - run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-      - run: make build
+      - run: make dockerx

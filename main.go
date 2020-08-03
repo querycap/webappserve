@@ -6,6 +6,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/querycap/webappserve/version"
 	"io"
 	"io/ioutil"
 	"log"
@@ -75,7 +76,7 @@ func Serve(opt *WebappServerOpt) error {
 	signal.Notify(stopCh, os.Interrupt, syscall.SIGTERM)
 
 	go func() {
-		log.Printf("webapp serve on %s (%s/%s)\n", srv.Addr, runtime.GOOS, runtime.GOARCH)
+		log.Printf("webapp serve on %s (%s/%s), %s\n", srv.Addr, runtime.GOOS, runtime.GOARCH, version.Version)
 
 		if err := srv.ListenAndServe(); err != nil {
 			if err == http.ErrServerClosed {
