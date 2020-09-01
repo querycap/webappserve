@@ -1,13 +1,14 @@
-FROM golang:1.14-buster as builder
+# syntax=docker/dockerfile:experimental
+
+FROM golang:1.15-buster as builder
 
 ARG TARGETARCH
+ARG GOPROXY
 
 COPY ./ /go/src/github.com/querycap/webappserve
 WORKDIR /go/src/github.com/querycap/webappserve
 
-ENV GOPROXY="https://goproxy.cn,direct"
-
-RUN make build
+RUN --mount=type=cache,id=gomod,target=/go/pkg/mod make build
 
 FROM debian:buster-slim
 
