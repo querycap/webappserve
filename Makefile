@@ -1,5 +1,5 @@
 PKG = $(shell cat go.mod | grep "^module " | sed -e "s/module //g")
-VERSION = v$(shell cat .version)
+VERSION = $(shell cat .version)
 COMMIT_SHA ?= $(shell git describe --always)-devel
 
 GOOS ?= $(shell go env GOOS)
@@ -10,7 +10,7 @@ build:
 	$(GOBUILD) .
 
 start:
-	docker run -p=80:80 querycap/webappserve:latest
+	docker run -p=80:80 querycap/webappserve:$(VERSION)
 
 test:
 	go test -v -race ./...
@@ -21,9 +21,5 @@ cover:
 install:
 	go install -v
 
-release:
-	git push
-	git push origin $(git describe --tags --abbrev=0)
-
 dockerx:
-	docker buildx build --build-arg=GOPROXY=${GOPROXY} --platform linux/amd64,linux/arm64 --push -t querycap/webappserve:${VERSION} .
+	docker buildx build --build-arg=GOPROXY=${GOPROXY} --platform linux/amd64,linux/arm64 --push -t querycap/webappserve:$(VERSION) .

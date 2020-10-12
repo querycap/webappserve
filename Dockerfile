@@ -5,14 +5,14 @@ FROM golang:1.15-buster as builder
 ARG TARGETARCH
 ARG GOPROXY
 
-COPY ./ /go/src/github.com/querycap/webappserve
-WORKDIR /go/src/github.com/querycap/webappserve
+COPY ./ /go/src
+WORKDIR /go/src
 
 RUN --mount=type=cache,id=gomod,target=/go/pkg/mod make build
 
-FROM debian:buster-slim
+FROM querycapdistroless/static-debian10:latest
 
-COPY --from=builder /go/src/github.com/querycap/webappserve/webappserve /bin/webappserve
+COPY --from=builder /go/src/webappserve /bin/webappserve
 COPY ./mime.types /etc/apache2/mime.types
 
 WORKDIR /app
@@ -24,4 +24,4 @@ ENV ENV=staging
 
 EXPOSE 80
 
-CMD ["webappserve"]
+ENTRYPOINT ["/bin/webappserve"]
