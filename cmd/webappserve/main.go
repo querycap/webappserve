@@ -6,7 +6,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/querycap/webappserve/version"
+	"github.com/querycap/webappserve/pkg/appconfig"
 	"io"
 	"io/ioutil"
 	"log"
@@ -23,6 +23,8 @@ import (
 	"github.com/NYTimes/gziphandler"
 	"github.com/rs/cors"
 	"github.com/spf13/cobra"
+
+	"github.com/querycap/webappserve/internal/version"
 )
 
 var serverOpt = &WebappServerOpt{}
@@ -110,7 +112,9 @@ func WebappServer(opt *WebappServerOpt) http.Handler {
 		panic(err)
 	}
 
-	appConfig := ParseAppConfig(opt.AppConfig)
+	appConfig := appconfig.ParseAppConfig(opt.AppConfig)
+
+	appConfig.LoadFromEnviron(os.Environ())
 
 	indexHTML = bytes.ReplaceAll(indexHTML, []byte("__ENV__"), []byte(opt.AppEnv))
 	indexHTML = bytes.ReplaceAll(indexHTML, []byte("__APP_CONFIG__"), []byte(appConfig.String()))
@@ -131,7 +135,7 @@ func WebappServer(opt *WebappServerOpt) http.Handler {
 }
 
 type webappServer struct {
-	appConfig   AppConfig
+	appConfig   appconfig.AppConfig
 	indexHTML   []byte
 	corsHandler *cors.Cors
 	fileHandler http.Handler

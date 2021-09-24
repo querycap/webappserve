@@ -1,0 +1,29 @@
+project_name: webappserve
+dist: ./bin
+before:
+  hooks:
+    - go mod tidy
+changelog:
+  filters:
+    exclude:
+      - '^docs'
+      - '^chore'
+builds:
+  - &_build
+    id: webappserve
+    dir: ./cmd/webappserve
+    binary: webappserve
+
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+    goarch:
+      - amd64
+      - arm64
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w -X github.com/querycap/webappserve/internal/version.Version={{ .Version }}+sha.{{ .FullCommit }}
+    mod_timestamp: '{{ .CommitTimestamp }}'
+

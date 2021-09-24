@@ -1,7 +1,6 @@
-package main
+package appconfig
 
 import (
-	"bytes"
 	"sort"
 	"strings"
 )
@@ -30,6 +29,18 @@ func ParseAppConfig(s string) AppConfig {
 
 type AppConfig map[string]string
 
+const AppConfigPrefx = "APP_CONFIG__"
+
+func (c AppConfig) LoadFromEnviron(kv []string) {
+	for i := range kv {
+		keyValue := strings.SplitN(kv[i], "=", 2)
+		key := keyValue[0]
+		if len(keyValue) >= 2 && strings.HasPrefix(key, AppConfigPrefx) {
+			c[key[len(AppConfigPrefx):]] = keyValue[1]
+		}
+	}
+}
+
 func (c AppConfig) String() string {
 	keys := make([]string, 0)
 
@@ -39,16 +50,16 @@ func (c AppConfig) String() string {
 
 	sort.Strings(keys)
 
-	buf := bytes.NewBuffer(nil)
+	b := strings.Builder{}
 
 	for i, k := range keys {
 		if i != 0 {
-			buf.WriteByte(',')
+			b.WriteByte(',')
 		}
-		buf.WriteString(k)
-		buf.WriteByte('=')
-		buf.WriteString(c[k])
+		b.WriteString(k)
+		b.WriteByte('=')
+		b.WriteString(c[k])
 	}
 
-	return buf.String()
+	return b.String()
 }
