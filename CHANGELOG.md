@@ -5,6 +5,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+# [0.1.0](https://github.com/querycap/webappserve/compare/v0.0.0...v0.1.0)
+
+### Features
+
+* **feat** support load APP_CONFIG__ perfix env var as app config ([e722c9b](https://github.com/querycap/webappserve/commit/e722c9b859ee2ab35c44c2aef91241339e4f2512))
+
+
+
 # 0.0.0
 
 ### Bug Fixes
