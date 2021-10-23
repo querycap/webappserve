@@ -18,7 +18,7 @@ cover:
 	go test -v -race -coverprofile=coverage.txt -covermode=atomic ./...
 
 install:
-	go install -v
+	go install ./cmd/webappserve
 
 dockerx: build
 	docker buildx build \

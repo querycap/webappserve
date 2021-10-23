@@ -56,6 +56,7 @@ func Serve(opt *WebappServerOpt) error {
 		gziphandler.ContentTypes([]string{
 			"application/json",
 			"application/javascript",
+			"application/wasm",
 			"image/svg+xml",
 			"text/html",
 			"text/xml",
