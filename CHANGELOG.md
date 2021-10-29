@@ -5,6 +5,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+# [0.2.0](https://github.com/querycap/webappserve/compare/v0.1.0...v0.2.0)
+
+### Bug Fixes
+
+* **fix** should gzip for wasm ([e6a68d0](https://github.com/querycap/webappserve/commit/e6a68d04396caec830e839cb44d8b614de3b994b))
+
+
+### Features
+
+* **feat** added br compress support ([fefee10](https://github.com/querycap/webappserve/commit/fefee10a9fb6c572e03bf287de87f5a9e0502280))
+
+
+
 # [0.1.0](https://github.com/querycap/webappserve/compare/v0.0.0...v0.1.0)
 
 ### Features
