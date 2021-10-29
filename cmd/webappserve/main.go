@@ -2,11 +2,9 @@ package main
 
 import (
 	"bytes"
-	"compress/gzip"
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/querycap/webappserve/pkg/appconfig"
 	"io"
 	"io/ioutil"
 	"log"
@@ -20,11 +18,11 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/NYTimes/gziphandler"
+	"github.com/querycap/webappserve/internal/version"
+	"github.com/querycap/webappserve/pkg/appconfig"
+	"github.com/querycap/webappserve/pkg/compress"
 	"github.com/rs/cors"
 	"github.com/spf13/cobra"
-
-	"github.com/querycap/webappserve/internal/version"
 )
 
 var serverOpt = &WebappServerOpt{}
@@ -51,29 +49,11 @@ func main() {
 }
 
 func Serve(opt *WebappServerOpt) error {
-	gzipHandler, err := gziphandler.GzipHandlerWithOpts(
-		gziphandler.CompressionLevel(gzip.BestSpeed),
-		gziphandler.ContentTypes([]string{
-			"application/json",
-			"application/javascript",
-			"application/wasm",
-			"image/svg+xml",
-			"text/html",
-			"text/xml",
-			"text/plain",
-			"text/css",
-			"text/*",
-		}),
-	)
-	if err != nil {
-		return err
-	}
-
 	if opt.Port == "" {
 		opt.Port = "80"
 	}
 
-	srv := &http.Server{Addr: ":" + opt.Port, Handler: gzipHandler(WebappServer(opt))}
+	srv := &http.Server{Addr: ":" + opt.Port, Handler: compress.CompressHandlerLevel(WebappServer(opt), 6)}
 
 	stopCh := make(chan os.Signal, 1)
 	signal.Notify(stopCh, os.Interrupt, syscall.SIGTERM)
