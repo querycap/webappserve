@@ -5,6 +5,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+# [0.2.1](https://github.com/querycap/webappserve/compare/v0.2.0...v0.2.1)
+
+### Bug Fixes
+
+* **fix** when file exists chould return file first before redirect ([bbfbab2](https://github.com/querycap/webappserve/commit/bbfbab25759de83fe7277fe1b4c333e265f871e8))
+
+
+
 # [0.2.0](https://github.com/querycap/webappserve/compare/v0.1.0...v0.2.0)
 
 ### Bug Fixes
