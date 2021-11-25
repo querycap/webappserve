@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"context"
-	"encoding/json"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -109,7 +108,7 @@ func WebappServer(opt *WebappServerOpt) http.Handler {
 
 	return &webappServer{
 		indexHTML:   indexHTML,
-		fileHandler: http.FileServer(http.Dir(root)),
+		fs:          http.Dir(root),
 		corsHandler: cors.Default(),
 		appConfig:   appConfig,
 	}
@@ -119,7 +118,7 @@ type webappServer struct {
 	appConfig   appconfig.AppConfig
 	indexHTML   []byte
 	corsHandler *cors.Cors
-	fileHandler http.Handler
+	fs          http.FileSystem
 }
 
 func (s *webappServer) responseFromIndexHTML(w http.ResponseWriter) {
@@ -141,32 +140,23 @@ func (s *webappServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	p := r.URL.Path
-
-	if p == "/favicon.ico" {
-		expires(w.Header(), 24*time.Hour)
-
-		s.fileHandler.ServeHTTP(w, r)
-		return
+	upath := r.URL.Path
+	if !strings.HasPrefix(upath, "/") {
+		upath = "/" + upath
+		r.URL.Path = upath
 	}
 
-	if p == "/sw.js" {
-		s.fileHandler.ServeHTTP(w, r)
-		return
-	}
+	p := path.Clean(upath)
 
-	if strings.HasPrefix(p, "/__built__/") {
-		if p == "/__built__/config.json" {
-			s.corsHandler.HandlerFunc(w, r)
-			w.Header().Set("Content-Type", mime.TypeByExtension(".json"))
-			w.WriteHeader(http.StatusOK)
-			_ = json.NewEncoder(w).Encode(s.appConfig)
-			return
+	if _, err := s.fs.Open(p); err == nil {
+		if p == "/favicon.ico" {
+			expires(w.Header(), 24*time.Hour)
+		} else if strings.HasPrefix(p, "/__built__/") {
+			if p != "/__built__/config.json" {
+				expires(w.Header(), 30*24*time.Hour)
+			}
 		}
-
-		expires(w.Header(), 30*24*time.Hour)
-
-		s.fileHandler.ServeHTTP(w, r)
+		http.FileServer(s.fs).ServeHTTP(w, r)
 		return
 	}
 

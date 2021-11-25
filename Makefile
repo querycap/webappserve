@@ -17,6 +17,9 @@ test:
 cover:
 	go test -v -race -coverprofile=coverage.txt -covermode=atomic ./...
 
+dep:
+	go get -u ./...
+
 install:
 	go install ./cmd/webappserve
 
