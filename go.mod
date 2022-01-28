@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/andybalholm/brotli v1.0.4
 	github.com/felixge/httpsnoop v1.0.2
-	github.com/onsi/gomega v1.16.0
+	github.com/onsi/gomega v1.18.1
 	github.com/rs/cors v1.8.0
 	github.com/spf13/cobra v1.2.1
 )
