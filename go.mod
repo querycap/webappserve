@@ -7,7 +7,7 @@ require (
 	github.com/felixge/httpsnoop v1.0.2
 	github.com/onsi/gomega v1.18.1
 	github.com/rs/cors v1.8.2
-	github.com/spf13/cobra v1.3.0
+	github.com/spf13/cobra v1.4.0
 )
 
 require (
