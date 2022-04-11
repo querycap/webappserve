@@ -148,6 +148,11 @@ func (s *webappServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	p := path.Clean(upath)
 
+	if p == "/" {
+		s.responseFromIndexHTML(w)
+		return
+	}
+
 	if _, err := s.fs.Open(p); err == nil {
 		if p == "/favicon.ico" {
 			expires(w.Header(), 24*time.Hour)
