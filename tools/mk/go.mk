@@ -1,7 +1,4 @@
-VERSION_PKG_PATH ?= internal/version
-VERSION ?= $(shell cat $(VERSION_PKG_PATH)/version)
-
-GO_FLAGS ?= -trimpath -ldflags="-s -w -X $(PKG)/$(VERSION_PKG_PATH).Version=$(VERSION)+sha.$(GIT_SHORT_SHA)"
+GO_FLAGS ?= -trimpath -ldflags="-s -w -X $(PKG)/internal/version.Version=$(VERSION)+sha.$(GIT_SHORT_SHA)"
 GO_RUN ?= go run $(GO_FLAGS) ./cmd/$(TARGET_EXEC)
 GO_INSTALL ?= go install $(GO_FLAGS) ./cmd/$(TARGET_EXEC)
 

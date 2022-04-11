@@ -5,6 +5,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+# [0.2.2](https://github.com/querycap/webappserve/compare/v0.2.1...v0.2.2)
+
+### Bug Fixes
+
+* **fix** should process index.html in root ([0dc795c](https://github.com/querycap/webappserve/commit/0dc795ca2075a039d2825515acb4ef92d2f64478))
+
+
+
 # [0.2.1](https://github.com/querycap/webappserve/compare/v0.2.0...v0.2.1)
 
 ### Bug Fixes
