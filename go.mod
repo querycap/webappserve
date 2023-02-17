@@ -3,7 +3,7 @@ module github.com/querycap/webappserve
 go 1.18
 
 require (
-	github.com/andybalholm/brotli v1.0.4
+	github.com/andybalholm/brotli v1.0.5
 	github.com/felixge/httpsnoop v1.0.2
 	github.com/onsi/gomega v1.19.0
 	github.com/rs/cors v1.8.2
